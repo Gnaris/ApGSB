@@ -11,7 +11,7 @@
             <?php
 			foreach ($lesMois as $unMois)
 			{
-			    $mois = $unMois['mois'];
+			  $mois = $unMois['mois'];
 				$numAnnee =  $unMois['numAnnee'];
 				$numMois =  $unMois['numMois'];
 				if($mois == $moisASelectionner){

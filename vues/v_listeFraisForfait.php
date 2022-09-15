@@ -23,10 +23,7 @@
 				}
 			?>
 			
-			
-			
-			
-           
+	
           </fieldset>
       </div>
       <div class="piedForm">
