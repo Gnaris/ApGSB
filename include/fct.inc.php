@@ -121,4 +121,29 @@ function nbErreurs(){
 	   return count($_REQUEST['erreurs']);
 	}
 }
+
+function saveUserValiderFrais()
+{
+	if(isset($_POST["user"]) && isset($_POST["date"]))
+	{
+		$_SESSION["userValiderFrais"] = $_POST["user"];
+		$_SESSION["dateValiderFrais"] = $_POST["date"];
+	}
+}
+
+function userSelected($user)
+{
+	if(isset($_SESSION["userValiderFrais"]) && $_SESSION["userValiderFrais"] === $user)
+	{
+		return "selected";
+	}
+}
+
+function dateSelected($date)
+{
+	if(isset($_SESSION["dateValiderFrais"]) && $_SESSION["dateValiderFrais"] === $date)
+	{
+		return "selected";
+	}
+}
 ?>

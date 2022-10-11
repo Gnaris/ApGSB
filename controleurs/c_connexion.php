@@ -1,11 +1,11 @@
 ﻿<?php
 if(!isset($_REQUEST['action']))
 {
-	$_REQUEST['action'] = 'demandeConnexion';
+	$_REQUEST['action'] = 'notConnected';
 }
 
 switch($_REQUEST['action']){
-	case 'demandeConnexion':{
+	case 'notConnected':{
 		include("vues/v_connexion.php");
 		break;
 	}
@@ -19,11 +19,7 @@ switch($_REQUEST['action']){
 			include("vues/v_connexion.php");
 		}
 		else{
-			$id = $visiteur['id'];
-			$nom =  $visiteur['nom'];
-			$prenom = $visiteur['prenom'];
-			$role = $visiteur['role'];
-			connecter($id,$nom,$prenom, $role);
+			connecter($visiteur['id'],$visiteur['nom'],$visiteur['prenom'], $visiteur['role']);
 			include("vues/v_sommaire.php");
 		}
 		break;

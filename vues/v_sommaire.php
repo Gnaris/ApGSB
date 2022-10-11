@@ -11,7 +11,7 @@
             echo $_SESSION["role"] === "C" ?
                '
             <li class="smenu">
-              <a href="index.php?uc=validerFrais&action=saisirFrais">Valider fiche de frais</a>
+              <a href="index.php?uc=validerFrais&action=saisirUtilisateur">Valider fiche de frais</a>
            </li>
            <li class="smenu">
               <a href="index.php?uc=etatFrais&action=selectionnerMois">Suivre paiement fiche de frais</a>

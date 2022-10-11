@@ -1,31 +1,44 @@
 <?php
-include "./vues/v_sommaire.php";
+$LesUtilisateurs = $pdo->getAllUtilisateur();
+switch($_REQUEST["action"])
+{
+    case "saisirUtilisateur" :
+    {  
+        $_SESSION["userValiderFrais"] = "";
+        $_SESSION["dateValiderFrais"] = "";
+        include "vues/v_insertionValiderFrais.php";
+        break;
+    }
+    case "gestionUtilisateur" :
+    {
+        saveUserValiderFrais();
+        $userFicheFrais = $pdo->getFicheFraisUtilisateur();
+        $userLigneFraisForfait = $pdo->getLigneFraisForfaitUtilisateur();
+        $userLigneFraisHorsForfait = $pdo->getLigneFraisHorsForfait();
+        include "vues/v_gestionUtilisateur.php";
+        break;
+    }
+    case "validerLigneFraisForfait" :
+    {
+        foreach($_POST as $idFraisForfait => $quantite)
+        {
+             $pdo->setQuantiteLFF($quantite, $idFraisForfait);
+        }
+        header("Location: index.php?uc=validerFrais&action=gestionUtilisateur");
+        break;
+    }
+    case "supprimerLigneFraisHorsForfait" : {
+        header("Location: index.php?uc=validerFrais&action=gestionUtilisateur");
+        break;
+    }
+    case "reporterLigneFraisHorsForfait" : {
+        header("Location: index.php?uc=validerFrais&action=gestionUtilisateur");
+        break;
+    }
+    case "validerLigneFraisHorsForfait" : 
+    {
+        header("Location: index.php?uc=validerFrais&action=gestionUtilisateur");
+        echo "Valider";
+    }
+}
 ?>
-<div id="contenu">
-    <h2>Validation des fiches de frais</h2>
-    <form action="">
-        <fieldset class="corpsForm">
-            <legend>Visiteur et mois à séléctionner</legend>
-            <div>
-                <div>
-                    <label for="select-visiteur">Visiteur :</label>
-                    <select name="visiteur" id="select-visiteur">
-                        <?php
-                        foreach ($pdo->getAllUtilisateur() as $user) {
-                            echo '<option value="' . $user["id"] . '">' . $user["prenom"] . ' ' . $user["nom"] . '</option>';
-                        }
-                        ?>
-                    </select>
-                </div>
-                <div>
-                    <label for="select-date">Mois :</label>
-                    <select name="visiteur" id="select-date">
-                        <?php
-                            
-                        ?>
-                    </select>
-                </div>
-            </div>
-        </fieldset>
-    </form>
-</div>
