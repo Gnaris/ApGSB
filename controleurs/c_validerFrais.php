@@ -1,4 +1,5 @@
 <?php
+include "./vues/element/v_sommaire.php";
 $LesUtilisateurs = $pdo->getAllUtilisateur();
 switch($_REQUEST["action"])
 {
@@ -6,16 +7,17 @@ switch($_REQUEST["action"])
     {  
         $_SESSION["userValiderFrais"] = "";
         $_SESSION["dateValiderFrais"] = "";
-        include "vues/v_insertionValiderFrais.php";
+        include "vues/comptable/v_insertionValiderFrais.php";
         break;
     }
     case "gestionUtilisateur" :
     {
+        $a = $pdo->getLesMoisDisponibles("a55");
         saveUserValiderFrais();
-        $userFicheFrais = $pdo->getFicheFraisUtilisateur();
-        $userLigneFraisForfait = $pdo->getLigneFraisForfaitUtilisateur();
-        $userLigneFraisHorsForfait = $pdo->getLigneFraisHorsForfait();
-        include "vues/v_gestionUtilisateur.php";
+        $userFicheFrais = $pdo->getFicheFraisUtilisateur($_POST["user"], $_POST["date"]);
+        $userFraisForfait = $pdo->getLesFraisForfait($_POST["user"], $_POST["date"]);
+        $userFraisHorsForfait = $pdo->getLesFraisHorsForfait($_POST["user"], $_POST["date"]);
+        include "vues/comptable/v_gestionUtilisateur.php";
         break;
     }
     case "validerLigneFraisForfait" :
@@ -27,16 +29,19 @@ switch($_REQUEST["action"])
         header("Location: index.php?uc=validerFrais&action=gestionUtilisateur");
         break;
     }
-    case "supprimerLigneFraisHorsForfait" : {
+    case "supprimerFraisHorsForfait" : {
+        $pdo->deleteFraisHorsForfaitComptable($_GET["id"]);
         header("Location: index.php?uc=validerFrais&action=gestionUtilisateur");
         break;
     }
-    case "reporterLigneFraisHorsForfait" : {
+    case "reporterFraisHorsForfait" : {
+        $pdo->reportFraisHorsForfait($_GET["id"], $_GET["mois"]);
         header("Location: index.php?uc=validerFrais&action=gestionUtilisateur");
         break;
     }
-    case "validerLigneFraisHorsForfait" : 
+    case "validerFraisHorsForfait" : 
     {
+        $pdo->validerFicheFrais($_SESSION["userValiderFrais"], $_SESSION["dateValiderFrais"], $_POST["justificatif"]);
         header("Location: index.php?uc=validerFrais&action=gestionUtilisateur");
         echo "Valider";
     }

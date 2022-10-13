@@ -1,6 +1,3 @@
-<?php
-include "./vues/v_sommaire.php";
-?>
 <div id="contenu">
     <h2>Validation des fiches de frais</h2>
     <form action="index.php?uc=validerFrais&action=gestionUtilisateur" method="post">

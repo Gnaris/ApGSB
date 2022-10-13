@@ -6,7 +6,7 @@ if(!isset($_REQUEST['action']))
 
 switch($_REQUEST['action']){
 	case 'notConnected':{
-		include("vues/v_connexion.php");
+		include("vues/auth/v_connexion.php");
 		break;
 	}
 	case 'valideConnexion':{
@@ -15,17 +15,17 @@ switch($_REQUEST['action']){
 		$visiteur = $pdo->getInfoUtilisateur($login,$mdp);
 		if(!is_array($visiteur)){
 			ajouterErreur("Login ou mot de passe incorrect");
-			include("vues/v_erreurs.php");
-			include("vues/v_connexion.php");
+			include("vues/element/v_erreurs.php");
+			include("vues/auth/v_connexion.php");
 		}
 		else{
 			connecter($visiteur['id'],$visiteur['nom'],$visiteur['prenom'], $visiteur['role']);
-			include("vues/v_sommaire.php");
+			include("vues/element/v_sommaire.php");
 		}
 		break;
 	}
 	default :{
-		include("vues/v_connexion.php");
+		include("vues/auth/v_connexion.php");
 		break;
 	}
 }

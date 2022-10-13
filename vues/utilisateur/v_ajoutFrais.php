@@ -1,7 +1,7 @@
 <?php
 echo"
 <h3>Ajouter un nouveau frais hors forfait</h3>
-<form method='POST' action='index.php?uc=gererFrais&action=validerCreationFrais'>
+<form method='POST' action='index.php?uc=saisieFrais&action=validerCreationFrais'>
 <table class='tabNonQuadrille'>
 <tr>
 	<td>Date du frais (jj/mois/aaaa)</td>

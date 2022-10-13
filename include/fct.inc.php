@@ -129,19 +129,23 @@ function saveUserValiderFrais()
 		$_SESSION["userValiderFrais"] = $_POST["user"];
 		$_SESSION["dateValiderFrais"] = $_POST["date"];
 	}
+	if(isset($_SESSION["userValiderFrais"]) && isset($_SESSION["dateValiderFrais"]))
+	{
+		$_POST["user"] = $_SESSION["userValiderFrais"];
+		$_POST["date"] = $_SESSION["dateValiderFrais"];
+	}
 }
 
 function userSelected($user)
 {
-	if(isset($_SESSION["userValiderFrais"]) && $_SESSION["userValiderFrais"] === $user)
+	if(isset($_POST["user"]) && $_POST["user"] === $user)
 	{
 		return "selected";
 	}
 }
-
 function dateSelected($date)
 {
-	if(isset($_SESSION["dateValiderFrais"]) && $_SESSION["dateValiderFrais"] === $date)
+	if(isset($_POST["date"]) && $_POST["date"] === $date)
 	{
 		return "selected";
 	}

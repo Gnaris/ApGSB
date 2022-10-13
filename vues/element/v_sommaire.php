@@ -20,7 +20,7 @@
                :
                '
             <li class="smenu">
-              <a href="index.php?uc=gererFrais&action=saisirFrais">Saisie fiche de frais</a>
+              <a href="index.php?uc=saisieFrais&action=saisirFrais">Saisie fiche de frais</a>
            </li>
            <li class="smenu">
               <a href="index.php?uc=etatFrais&action=selectionnerMois">Mes fiches de frais</a>

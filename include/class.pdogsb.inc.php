@@ -12,9 +12,6 @@ class PdoGsb{
     	PdoGsb::$monPdo = new PDO(PdoGsb::$serveur.';'.PdoGsb::$bdd, PdoGsb::$user, PdoGsb::$mdp); 
 		PdoGsb::$monPdo->query("SET CHARACTER SET utf8");
 	}
-	public function _destruct(){
-		PdoGsb::$monPdo = null;
-	}
 
 	public  static function getPdoGsb(){
 		if(PdoGsb::$monPdoGsb==null){
@@ -189,23 +186,14 @@ class PdoGsb{
         return PdoGsb::$monPdo->query($request)->fetchAll();
     }
 
-	public function getFicheFraisUtilisateur()
+	public function getFicheFraisUtilisateur($idVisiteur, $dateVisiteur)
 	{
 		$request = 'SELECT f.idVisiteur, f.mois, f.nbJustificatifs, f.montantValide, f.dateModif, e.libelle
 		FROM fichefrais AS f 
 		INNER JOIN etat AS e ON f.idEtat = e.id
-		WHERE f.idVisiteur="' . $_SESSION["userValiderFrais"] . '" AND f.mois="' . $_SESSION["dateValiderFrais"] . '";';
+		WHERE f.idVisiteur="' . $idVisiteur . '" AND f.mois="' . $dateVisiteur . '";';
 		
 		return PdoGsb::$monPdo->query($request)->fetch();
-	}
-
-	public function getLigneFraisForfaitUtilisateur()
-	{
-		$request = 'SELECT lff.quantite, ff.libelle, ff.id FROM lignefraisforfait AS lff
-		INNER JOIN fraisforfait AS ff ON ff.id = lff.idFraisForfait
-		WHERE lff.idVisiteur="' . $_SESSION["userValiderFrais"] . '" AND lff.mois="' . $_SESSION["dateValiderFrais"] . '";';
-
-		return PdoGsb::$monPdo->query($request)->fetchAll();
 	}
 
 	public function setQuantiteLFF($quantite, $idFraisForfait)
@@ -216,11 +204,36 @@ class PdoGsb{
 		PdoGsb::$monPdo->query($request);
 	}
 
-	public function getLigneFraisHorsForfait()
+	public function deleteFraisHorsForfaitComptable($idFrais)
 	{
-		$request = 'SELECT id, libelle, date, montant FROM lignefraishorsforfait 
-		WHERE idVisiteur = "' . $_SESSION["userValiderFrais"] . '" AND mois = "' . $_SESSION["dateValiderFrais"] . '";';
-		return PdoGsb::$monPdo->query($request)->fetchAll();
+		$request = 'UPDATE lignefraishorsforfait SET statut = 0 WHERE id = ' . (int)$idFrais;
+		PdoGsb::$monPdo->query($request);
+	}
+
+	public function reportFraisHorsForfait($id, $mois)
+	{
+		$separator = explode(" ", substr_replace($mois, " ", 4, 0));
+		if(((int)$separator[1] + 1) > 12)
+		{
+			$separator[1] = 01;
+			$date = (int)$separator[0]++ + "" + $separator[1];
+		}
+		else
+		{
+			$date = $mois + 1;
+		}
+		$request = 'UPDATE lignefraishorsforfait SET mois = ' . (int)$date . ' WHERE id = ' . $id;
+		PdoGsb::$monPdo->query($request);
+	}
+
+	public function validerFicheFrais($idVisiteur, $mois, $nbJustificatifs)
+	{
+		$request1 = 'UPDATE fichefrais SET idEtat = "VA" WHERE idVisiteur = "' . $idVisiteur . '" AND mois = ' . $mois;
+		$request2 = 'UPDATE fichefrais SET dateModif = NOW() WHERE idVisiteur = "' . $idVisiteur . '" AND mois = ' . $mois;
+		$request3 = 'UPDATE fichefrais SET nbJustificatifs = ' . $nbJustificatifs . ' WHERE idVisiteur = "' . $idVisiteur . '" AND mois = ' . $mois;
+		PdoGsb::$monPdo->query($request1);
+		PdoGsb::$monPdo->query($request2);
+		PdoGsb::$monPdo->query($request3);
 	}
 }
 ?>

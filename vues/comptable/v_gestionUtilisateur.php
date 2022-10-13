@@ -1,5 +1,5 @@
 <?php
-include "vues/v_InsertionValiderFrais.php";
+include "vues/comptable/v_InsertionValiderFrais.php";
 ?>
 <fieldset class="corpsForm">
         <?php
