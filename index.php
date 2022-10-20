@@ -26,6 +26,10 @@ switch ($_REQUEST['uc']) {
 			include("controleurs/c_etatFrais.php");
 			break;
 		}
+	case 'remboursementForfaitaires' : {
+			include ("controleurs/c_remboursement.php");
+			break;
+	}
 	case 'validerFrais' : {
 		if($_SESSION["role"] === "C")
 		{

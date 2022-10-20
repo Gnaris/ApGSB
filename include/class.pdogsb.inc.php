@@ -235,5 +235,14 @@ class PdoGsb{
 		PdoGsb::$monPdo->query($request2);
 		PdoGsb::$monPdo->query($request3);
 	}
+
+	public function getFraisForfait()
+	{
+		$request = "SELECT libelle, montant FROM fraisforfait";
+		$prepare = PdoGsb::$monPdo->prepare($request);
+		$prepare->execute();
+		$data = $prepare->fetchAll();
+		return $data;
+	}
 }
 ?>

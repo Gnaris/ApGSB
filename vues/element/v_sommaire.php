@@ -25,6 +25,9 @@
            <li class="smenu">
               <a href="index.php?uc=etatFrais&action=selectionnerMois">Mes fiches de frais</a>
            </li>
+           <li class="smenu">
+              <a href="index.php?uc=remboursementForfaitaires&action=listRemboursement">Remboursements forfaitaires</a>
+           </li>
             ';
             ?>
 
