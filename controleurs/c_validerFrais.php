@@ -7,19 +7,30 @@ switch($_REQUEST["action"])
     {  
         $_SESSION["userValiderFrais"] = "";
         $_SESSION["dateValiderFrais"] = "";
-        include "vues/comptable/v_insertionValiderFrais.php";
+        include "vues/comptable/validerFrais/v_insertionValiderFrais.php";
         break;
     }
+
     case "gestionUtilisateur" :
     {
-        $a = $pdo->getLesMoisDisponibles("a55");
-        saveUserValiderFrais();
+        $input = true;
+        if(isset($_POST["user"]) && isset($_POST["date"]))
+        {
+            $_SESSION["userValiderFrais"] = $_POST["user"];
+            $_SESSION["dateValiderFrais"] = $_POST["date"];
+        }
+        if(isset($_SESSION["userValiderFrais"]) && isset($_SESSION["dateValiderFrais"]))
+        {
+            $_POST["user"] = $_SESSION["userValiderFrais"];
+            $_POST["date"] = $_SESSION["dateValiderFrais"];
+        }
         $userFicheFrais = $pdo->getFicheFraisUtilisateur($_POST["user"], $_POST["date"]);
         $userFraisForfait = $pdo->getLesFraisForfait($_POST["user"], $_POST["date"]);
         $userFraisHorsForfait = $pdo->getLesFraisHorsForfait($_POST["user"], $_POST["date"]);
-        include "vues/comptable/v_gestionUtilisateur.php";
+        include "vues/comptable/validerFrais/v_gestionUtilisateur.php";
         break;
     }
+
     case "validerLigneFraisForfait" :
     {
         foreach($_POST as $idFraisForfait => $quantite)

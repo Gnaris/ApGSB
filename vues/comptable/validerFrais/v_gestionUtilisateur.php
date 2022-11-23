@@ -1,11 +1,11 @@
 <?php
-include "vues/comptable/v_InsertionValiderFrais.php";
+include "vues/comptable/validerFrais/v_InsertionValiderFrais.php";
 ?>
 <fieldset class="corpsForm">
         <?php
         if(is_array($userFicheFrais))
         {
-                include "v_ValiderFraisUser.php";
+                include "v_validerFraisUser.php";
         }
         else
         {

@@ -13,7 +13,11 @@
             <?php
                 foreach($userFraisForfait as $ulff)
                 {
-                    echo '<th><input type="text" name="'. $ulff["idfrais"] .'" value="' . $ulff["quantite"] . '"></th>';
+                    if($input){
+                        echo '<th><input type="text" name="'. $ulff["idfrais"] .'" value="' . $ulff["quantite"] . '"></th>';
+                    }else{
+                        echo '<th>' . $ulff["quantite"] . '</th>';
+                    }
                 }
             ?>
         </tr>

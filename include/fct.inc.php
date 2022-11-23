@@ -122,20 +122,6 @@ function nbErreurs(){
 	}
 }
 
-function saveUserValiderFrais()
-{
-	if(isset($_POST["user"]) && isset($_POST["date"]))
-	{
-		$_SESSION["userValiderFrais"] = $_POST["user"];
-		$_SESSION["dateValiderFrais"] = $_POST["date"];
-	}
-	if(isset($_SESSION["userValiderFrais"]) && isset($_SESSION["dateValiderFrais"]))
-	{
-		$_POST["user"] = $_SESSION["userValiderFrais"];
-		$_POST["date"] = $_SESSION["dateValiderFrais"];
-	}
-}
-
 function userSelected($user)
 {
 	if(isset($_POST["user"]) && $_POST["user"] === $user)

@@ -41,6 +41,17 @@ switch ($_REQUEST['uc']) {
 		}
 		break;
 	}
+	case 'suivreFrais' : {
+		if($_SESSION["role"] === "C")
+		{
+			include("controleurs/c_suivreFrais.php");
+		}
+		else
+		{
+			include("controleurs/c_connexion.php");
+		}
+		break;
+	}
 }
 		?>
 

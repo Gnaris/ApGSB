@@ -134,7 +134,7 @@ class PdoGsb{
 	public function creeNouveauFraisHorsForfait($idVisiteur,$mois,$libelle,$date,$montant){
 		$dateFr = dateFrancaisVersAnglais($date);
 		$req = "insert into lignefraishorsforfait 
-		values('','$idVisiteur','$mois','$libelle','$dateFr','$montant')";
+		values('','$idVisiteur','$mois','$libelle','$dateFr','$montant', DEFAULT)";
 		PdoGsb::$monPdo->exec($req);
 	}
 
@@ -243,6 +243,23 @@ class PdoGsb{
 		$prepare->execute();
 		$data = $prepare->fetchAll();
 		return $data;
+	}
+	// SUIVRE FRAIS
+
+	public function getUtilisateurValider()
+	{
+		$req = "SELECT u.nom, u.prenom, f.idVisiteur, f.mois, f.dateModif FROM fichefrais f JOIN utilisateur u ON u.id = f.idVisiteur WHERE f.idEtat = 'VA'";
+		$pre = PdoGsb::$monPdo->prepare($req);
+		$pre->execute();
+		$data = $pre->fetchAll();
+		return $data;
+	}
+
+	public function validerRemboursementFicheFrais($userID, $mois, $dateModif)
+	{
+		$req = 'UPDATE fichefrais SET idEtat = "RB" WHERE idVisiteur = "' . $userID . '" AND mois = "' . $mois . '" AND dateModif = "' . $dateModif . '"';
+		$pre = PdoGsb::$monPdo->prepare($req);
+		$pre->execute();
 	}
 }
 ?>

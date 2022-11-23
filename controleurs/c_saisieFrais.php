@@ -6,7 +6,7 @@ $numAnnee =substr($mois,0,4);
 $numMois =substr($mois,4,2);
 
 switch($_REQUEST['action']){
-	case 'saisieFrais':{
+	case 'saisirFrais':{
 		if($pdo->estPremierFraisMois($idVisiteur,$mois)){
 			$pdo->creeNouvellesLignesFrais($idVisiteur,$mois);
 		}
